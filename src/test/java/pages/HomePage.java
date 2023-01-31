@@ -25,6 +25,9 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//*[@id=\"app\"]/div/div/header/div/span/button/span/i")
     private WebElement leftSidebar;
 
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/a[3]")
+    private WebElement myProfile;
+
 
     public HomePage(WebDriver webDriver, WebDriverWait webDriverWait) {
         super(webDriver, webDriverWait);
@@ -32,6 +35,10 @@ public class HomePage extends BasePage {
 
     public WebElement getBmcButton() {
         return bmcButton;
+    }
+
+    public WebElement getMyProfile() {
+        return myProfile;
     }
 
     public WebElement getLanguageButton() {

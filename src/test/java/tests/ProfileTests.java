@@ -1,4 +1,14 @@
 package tests;
+
+import com.github.javafaker.Faker;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import pages.LoginPage;
+import pages.ProfilePage;
+
 /*
 Test #1: Edits profile
 Podaci: random podaci korišćenjem faker library-ja
@@ -8,4 +18,32 @@ assert:
 je uneta u okviru forme
  */
 public class ProfileTests extends BaseTest {
+    private ProfilePage profilePage;
+    private LoginPage loginPage;
+
+    @Override
+    @BeforeClass
+    public void beforeClass() {
+        super.beforeClass();
+        profilePage = new ProfilePage(driver, driverWait);
+        loginPage = new LoginPage(driver, driverWait);
+    }
+
+    @BeforeMethod
+    @Override
+    public void beforeMethod() {
+        super.beforeMethod();
+        driver.get("https://vue-demo.daniel-avellaneda.com/profile");
+    }
+
+    @Test
+    public void testEditProfile(){
+        loginPage.logIn("admin@admin.com", "12345");
+        homePage.getMyProfile().click();
+        Faker faker = new Faker();
+        profilePage.editMyProfile(faker.name().firstName(), faker.phoneNumber().toString(), faker.country().toString(),
+                faker.internet().url(), faker.internet().url());
+        driverWait.until(ExpectedConditions.visibilityOf(profilePage.getMessageSuccessfulySaved()));
+        Assert.assertEquals(profilePage.getMessageSuccessfulySaved().getText(), "Profile saved successfuly");
+    }
 }
