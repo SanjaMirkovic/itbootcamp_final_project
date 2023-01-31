@@ -1,8 +1,13 @@
 package tests;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Factory;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 
@@ -45,6 +50,10 @@ assert:
 stranice javlja /login ruta (otvoriti sa driver.get home page i proveriti
 da li vas redirektuje na login)
  */
+import com.github.javafaker.Faker;
+
+import java.time.Duration;
+
 public class LoginTests extends BaseTest {
 
     private LoginPage loginPage;
@@ -67,4 +76,46 @@ public class LoginTests extends BaseTest {
     public void testLoginUrl (){
         Assert.assertTrue(driver.getCurrentUrl().contains("/login"));
     }
+
+    @Test
+    public void testEmailAndPasswordField () {
+        Assert.assertEquals(loginPage.getEmail().getAttribute("type"), "email");
+        Assert.assertEquals(loginPage.getPassword().getAttribute("type"), "password");
+    }
+
+    @Test
+    public void testErrorMessageUserDoNotExists(){
+        Faker faker = new Faker();
+        loginPage.logIn(faker.internet().emailAddress(), faker.internet().password());
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        Assert.assertEquals(loginPage.getErrorMessageUserDoNotExists().getText(), "User does not exists");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        Assert.assertTrue(driver.getCurrentUrl().contains("/login"));
+    }
+    @Test
+    public void testErrorMessageWrongPassword(){
+        loginPage.logIn("admin@admin.com", "1234567");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        Assert.assertEquals(loginPage.getErrorMessageWrongPassword().getText(), "Wrong password");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        Assert.assertTrue(driver.getCurrentUrl().contains("/login"));
+    }
+    @Test
+    private void testLoginAdmin (){
+        loginPage.logIn("admin@admin.com", "12345");
+        driverWait.until(ExpectedConditions.urlContains("/home"));
+        Assert.assertTrue(driver.getCurrentUrl().contains("/home"));
+    }
+
+    @Test
+    private void testLogout(){
+        loginPage.logIn("admin@admin.com", "12345");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        Assert.assertTrue(loginPage.getLoginButton().isDisplayed());
+        driverWait.until(ExpectedConditions.urlContains("/login"));
+        Assert.assertTrue(driver.getCurrentUrl().contains("/login"));
+    }
+
 }
+
+
