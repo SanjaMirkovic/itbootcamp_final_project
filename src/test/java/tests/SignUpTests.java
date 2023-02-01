@@ -1,8 +1,21 @@
 package tests;
+
+import com.github.javafaker.Faker;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import pages.LoginPage;
+import pages.SignUpPage;
+
+import java.time.Duration;
+
 /*
 Test #1: Visits the signup page
 assert:
 Verifikovati da se u url-u stranice javlja /signup ruta
+
 Test #2: Checks input types
 assert:
 Verifikovati da polje za unos emaila za atribut type ima vrednost
@@ -11,6 +24,7 @@ email
 password
 Verifikovati da polje za unos lozinke za potvrdu za atribut type ima
 vrednost password
+
 Test #3: Displays errors when user already exists
 Podaci:
 name: Test Test
@@ -20,6 +34,7 @@ Podaci:
 assert:
 Verifikovati da greska sadrzi poruku E-mail already exists
 Verifikovati da se u url-u stranice javlja /signup ruta
+
 Test #4: Signup
 Podaci:
 name: Ime i prezime polaznika
@@ -31,4 +46,56 @@ assert:
 Verify your account
  */
 public class SignUpTests extends BaseTest {
+
+    private SignUpPage signUpPage;
+
+    @Override
+    @BeforeClass
+    public void beforeClass() {
+        super.beforeClass();
+        signUpPage = new SignUpPage(driver, driverWait);
+    }
+
+    @BeforeMethod
+    @Override
+    public void beforeMethod() {
+        super.beforeMethod();
+        homePage.getSignUpButton().click();
+    }
+
+    @Test
+    public void testSignUpUrl(){
+        Assert.assertTrue(driver.getCurrentUrl().contains("/signup"));
+    }
+
+    @Test
+    public void testInputTypes(){
+        Assert.assertEquals(signUpPage.getName().getAttribute("type"), "Name");
+        Assert.assertEquals(signUpPage.getEmail().getAttribute("type"), "Email");
+        Assert.assertEquals(signUpPage.getPassword().getAttribute("type"), "Password");
+        Assert.assertEquals(signUpPage.getConfirmPassword().getAttribute("type"), "Confirm Password");
+    }
+
+    @Test
+    public void testUserAlreadyExist(){
+        signUpPage.signUp("Test Test", "admin@admin.com", "123654", "123654");
+        driverWait.until(ExpectedConditions.visibilityOf(signUpPage.getMessageUserAlreadyExists()));
+        Assert.assertEquals(signUpPage.getMessageUserAlreadyExists().getText(), "E-mail already exists");
+        Assert.assertTrue(driver.getCurrentUrl().endsWith("/signup"));
+    }
+
+    @Test
+    public void testSignUpVerify(){
+        Faker faker = new Faker();
+        String password = faker.internet().password();
+        signUpPage.signUp("Sanja Mirkovic", faker.internet().emailAddress(), password, password);
+        driverWait.until(ExpectedConditions.textToBePresentInElement(signUpPage.getMessageVerifyAccount(),
+                "IMPORTANT: Verify your account"));
+        Assert.assertEquals(signUpPage.getMessageVerifyAccount().getText(), "IMPORTANT: Verify your account");
+
+    }
+
+
+
+
 }

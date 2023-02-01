@@ -9,6 +9,8 @@ import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.ProfilePage;
 
+import java.time.Duration;
+
 /*
 Test #1: Edits profile
 Podaci: random podaci korišćenjem faker library-ja
@@ -40,10 +42,12 @@ public class ProfileTests extends BaseTest {
     public void testEditProfile(){
         loginPage.logIn("admin@admin.com", "12345");
         homePage.getMyProfile().click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         Faker faker = new Faker();
         profilePage.editMyProfile(faker.name().firstName(), faker.phoneNumber().toString(), faker.country().toString(),
                 faker.internet().url(), faker.internet().url());
-        driverWait.until(ExpectedConditions.visibilityOf(profilePage.getMessageSuccessfulySaved()));
-        Assert.assertEquals(profilePage.getMessageSuccessfulySaved().getText(), "Profile saved successfuly");
+        driverWait.until(ExpectedConditions.textToBePresentInElement(profilePage.getMessageSuccessfulySaved(),
+                "Profile saved successfuly"));
+        Assert.assertEquals(profilePage.getMessage().getText(), "Profile saved successfuly");
     }
 }

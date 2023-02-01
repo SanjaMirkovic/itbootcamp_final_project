@@ -28,6 +28,35 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/a[3]")
     private WebElement myProfile;
 
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/button[1]/span")
+    private WebElement logoutButton;
+
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/button[1]/span")
+    private WebElement adminButton;
+
+    @FindBy(xpath = "//*[@id=\"list-item-158\"]/div[2]")
+    private WebElement cities;
+
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[1]/h1")
+    private WebElement title;
+
+    public WebElement getTitle() {
+        return title;
+    }
+
+    public WebElement getCities() {
+        return cities;
+    }
+
+
+
+    public WebElement getAdminButton() {
+        return adminButton;
+    }
+
+    public WebElement getLogoutButton() {
+        return logoutButton;
+    }
 
     public HomePage(WebDriver webDriver, WebDriverWait webDriverWait) {
         super(webDriver, webDriverWait);
