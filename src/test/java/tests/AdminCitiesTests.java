@@ -13,6 +13,7 @@ import pages.LoginPage;
 import pages.ProfilePage;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 /*
 Test #1: Visits the admin cities page and list cities
@@ -56,7 +57,8 @@ public class AdminCitiesTests extends BaseTest {
 
     private AdminPage adminPage;
     private LoginPage loginPage;
-    private String city;
+    Faker faker = new Faker();
+    private String city = faker.address().city();
 
     @Override
     @BeforeClass
@@ -68,28 +70,22 @@ public class AdminCitiesTests extends BaseTest {
 
     @BeforeMethod
     @Override
-    public void beforeMethod() {
-        super.beforeMethod();
+    public void beforeTest() {
+        super.beforeTest();
         homePage.getLoginButton().click();
         loginPage.logIn("admin@admin.com", "12345");
     }
 
     @Test
-    public void testAdminPagesAndLists(){
+    public void testAdminPagesAndLists() {
         homePage.getAdminButton().click();
         homePage.getCities().click();
         Assert.assertTrue(driver.getCurrentUrl().contains("/admin/cities"));
         Assert.assertTrue(homePage.getLogoutButton().isDisplayed());
     }
 
-    //element.sendKeys(Keys.SPACE, Keys.BACK_SPACE);
-    //cityField.sendKeys(Keys.SPACE, Keys.BACK_SPACE);
-    //cityField.sendKeys(Keys.CONTROL + "a")
-    //cityField.sendKeys(Keys.DELETE)
-
     @Test
-    public void testCreateNewCity(){
-        Faker faker = new Faker();
+    public void testCreateNewCity() {
         city = faker.address().city();
         homePage.getAdminButton().click();
         homePage.getCities().click();
@@ -101,7 +97,7 @@ public class AdminCitiesTests extends BaseTest {
     }
 
     @Test
-    public void testEditCity(){
+    public void testEditCity() {
         homePage.getAdminButton().click();
         homePage.getCities().click();
         adminPage.editCity(city);
@@ -110,4 +106,21 @@ public class AdminCitiesTests extends BaseTest {
         Assert.assertTrue(adminPage.getErrorMessage().getText().contains("Saved successfully"));
     }
 
+    @Test
+    public void testSearchCity() {
+    }
+
+    @Test
+    public void testDeleteCity() {
+        homePage.getAdminButton().click();
+        homePage.getCities().click();
+        adminPage.getSearchField().sendKeys(city + " edited");
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        adminPage.getDeleteButton().click();
+        driverWait.until(ExpectedConditions.elementToBeClickable(adminPage.getDialogButton()));
+        adminPage.getDialogButton().click();
+        driverWait.until(ExpectedConditions.textToBePresentInElement(adminPage.getErrorMessage(),
+                "Deleted successfully"));
+        Assert.assertTrue(adminPage.getErrorMessage().getText().contains("Deleted successfully"));
+    }
 }

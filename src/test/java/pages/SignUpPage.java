@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 public class SignUpPage extends BasePage {
 
     @FindBy(id = "name")
@@ -21,7 +22,6 @@ public class SignUpPage extends BasePage {
     @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[3]/div/div/div/div/div[1]/ul/li")
     private WebElement messageUserAlreadyExists;
 
-
     @FindBy(xpath = "//*[@id=\"app\"]/div[4]/div/div/div[1]")
     private WebElement messageVerifyAccount;
 
@@ -29,24 +29,16 @@ public class SignUpPage extends BasePage {
         return messageVerifyAccount;
     }
 
-    public WebElement getName() {
-        return name;
+    public String getEmail() {
+        return email.getAttribute("type");
     }
 
-    public WebElement getEmail() {
-        return email;
+    public String getPassword() {
+        return password.getAttribute("type");
     }
 
-    public WebElement getPassword() {
-        return password;
-    }
-
-    public WebElement getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public WebElement getSignMeUpButton() {
-        return signMeUpButton;
+    public String getConfirmPassword() {
+        return confirmPassword.getAttribute("type");
     }
 
     public SignUpPage(WebDriver webDriver, WebDriverWait webDriverWait) {
@@ -57,19 +49,19 @@ public class SignUpPage extends BasePage {
         return messageUserAlreadyExists;
     }
 
-    public void signUp(String name, String email, String password, String confirmPassword){
-            this.name.clear();
-            this.name.sendKeys(name);
+    public void signUp(String name, String email, String password, String confirmPassword) {
+        this.name.clear();
+        this.name.sendKeys(name);
 
-            this.email.clear();
-            this.email.sendKeys(email);
+        this.email.clear();
+        this.email.sendKeys(email);
 
-            this.password.clear();
-            this.password.sendKeys(password);
+        this.password.clear();
+        this.password.sendKeys(password);
 
-            this.confirmPassword.clear();
-            this.confirmPassword.sendKeys(confirmPassword);
+        this.confirmPassword.clear();
+        this.confirmPassword.sendKeys(confirmPassword);
 
-            this.signMeUpButton.click();
+        this.signMeUpButton.click();
     }
 }

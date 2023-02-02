@@ -42,16 +42,19 @@ public class LocaleTests extends BaseTest {
         homePage.getLanguageButton().click();
         localePage.getEs().click();
         Assert.assertEquals(homePage.getTitle().getText(), "Página de aterrizaje");
-    } @Test
+    }
+
+    @Test
     public void testEN() {
         homePage.getLanguageButton().click();
         localePage.getEn().click();
         Assert.assertEquals(homePage.getTitle().getText(), "Landing");
-    } @Test
+    }
+
+    @Test
     public void testFR() {
         homePage.getLanguageButton().click();
         localePage.getFr().click();
         Assert.assertEquals(homePage.getTitle().getText(), "Page d'atterrissage");
     }
-
 }

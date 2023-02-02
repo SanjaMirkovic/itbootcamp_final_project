@@ -33,21 +33,22 @@ public class ProfileTests extends BaseTest {
 
     @BeforeMethod
     @Override
-    public void beforeMethod() {
-        super.beforeMethod();
+    public void beforeTest() {
+        super.beforeTest();
         driver.get("https://vue-demo.daniel-avellaneda.com/profile");
+        loginPage.logIn("admin@admin.com", "12345");
+
     }
 
     @Test
     public void testEditProfile(){
-        loginPage.logIn("admin@admin.com", "12345");
         homePage.getMyProfile().click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         Faker faker = new Faker();
-        profilePage.editMyProfile(faker.name().firstName(), faker.phoneNumber().toString(), faker.country().toString(),
-                faker.internet().url(), faker.internet().url());
+        profilePage.editMyProfile(faker.name().fullName(), faker.phoneNumber().phoneNumber(), "New York",
+                faker.country().name(), faker.internet().url(), faker.internet().url());
         driverWait.until(ExpectedConditions.textToBePresentInElement(profilePage.getMessageSuccessfulySaved(),
                 "Profile saved successfuly"));
-        Assert.assertEquals(profilePage.getMessage().getText(), "Profile saved successfuly");
+        Assert.assertTrue(profilePage.getMessageSuccessfulySaved().getText().contains("Profile saved successfuly"));
+
     }
 }

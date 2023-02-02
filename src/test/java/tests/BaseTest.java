@@ -8,9 +8,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import pages.HomePage;
-
 import java.time.Duration;
-
 /*
 Osnovna klasa koju svaki test da nasledjuje. Ova klasa treba da ima:
 baseUrl - url stranice https://vue-demo.daniel-avellaneda.com
@@ -26,8 +24,6 @@ public abstract class BaseTest {
     protected WebDriverWait driverWait;
     protected HomePage homePage;
 
-    protected final String url = "https://vue-demo.daniel-avellaneda.com";
-
     @BeforeClass
     public void beforeClass() {
         System.setProperty("webdriver.chrome.driver", "D:\\Bootcamp\\chromedriver.exe");
@@ -38,15 +34,15 @@ public abstract class BaseTest {
     }
 
     @BeforeMethod
-    public void beforeMethod() {
+    public void beforeTest() {
         driver.get("https://vue-demo.daniel-avellaneda.com");
         driver.manage().window().maximize();
     }
 
-//    @AfterMethod
-//    public void afterMethod(){
-//        if ()
-//    }
+   @AfterMethod
+   public void afterMethod(){
+       homePage.getLogoutButton().click();
+   }
 
     @AfterClass
     public void afterClass() {

@@ -17,11 +17,7 @@ public class LoginPage extends BasePage {
     private WebElement loginButton;
 
     @FindBy (xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]/ul/li")
-    private WebElement errorMessageUserDoNotExists;
-
-    @FindBy (xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]/ul/li")
-    private WebElement errorMessageWrongPassword;
-
+    private WebElement errorMessage;
     public LoginPage(WebDriver webDriver, WebDriverWait webDriverWait) {
         super(webDriver, webDriverWait);
     }
@@ -38,12 +34,8 @@ public class LoginPage extends BasePage {
         return loginButton;
     }
 
-    public WebElement getErrorMessageWrongPassword() {
-        return errorMessageWrongPassword;
-    }
-
-    public WebElement getErrorMessageUserDoNotExists() {
-        return errorMessageUserDoNotExists;
+    public WebElement getErrorMessage() {
+        return errorMessage;
     }
 
     public void logIn(String email, String password){

@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -25,17 +26,11 @@ public class ProfilePage extends BasePage {
     private WebElement twitter;
     @FindBy(id = "urlGitHub")
     private WebElement github;
-    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[2]/span/form/div/div/div[8]/button/span")
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[2]/span/form/div/div/div[8]/button")
     private WebElement saveButton;
 
     @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]")
     private WebElement messageSuccessfulySaved;
-    @FindBy(className = "v-snack__content")
-    private WebElement message;
-
-    public WebElement getMessage() {
-        return message;
-    }
 
     public ProfilePage(WebDriver webDriver, WebDriverWait webDriverWait) {
         super(webDriver, webDriverWait);
@@ -74,12 +69,17 @@ public class ProfilePage extends BasePage {
     }
 
 
-    public void editMyProfile (String name, String phone, String country, String twitter, String github){
+    public void editMyProfile (String name, String phone, String city, String country, String twitter, String github){
         this.name.clear();
         this.name.sendKeys(name);
 
         this.phone.clear();
         this.phone.sendKeys(phone);
+
+        this.city.clear();
+        this.city.sendKeys(Keys.CONTROL + "a");
+        this.city.sendKeys(Keys.DELETE);
+        this.city.sendKeys(city, Keys.ENTER);
 
         this.country.clear();
         this.country.sendKeys(country);
@@ -90,7 +90,7 @@ public class ProfilePage extends BasePage {
         this.github.clear();
         this.github.sendKeys(github);
 
-        saveButton.click();
+        this.saveButton.click();
     }
 
 }

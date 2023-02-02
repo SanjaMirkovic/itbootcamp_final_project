@@ -5,10 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Factory;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages.LoginPage;
 
 /*
@@ -67,8 +64,8 @@ public class LoginTests extends BaseTest {
 
     @BeforeMethod
     @Override
-    public void beforeMethod() {
-        super.beforeMethod();
+    public void beforeTest() {
+        super.beforeTest();
         homePage.getLoginButton().click();
     }
 
@@ -88,18 +85,20 @@ public class LoginTests extends BaseTest {
         Faker faker = new Faker();
         loginPage.logIn(faker.internet().emailAddress(), faker.internet().password());
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        Assert.assertEquals(loginPage.getErrorMessageUserDoNotExists().getText(), "User does not exists");
+        Assert.assertEquals(loginPage.getErrorMessage().getText(), "User does not exists");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         Assert.assertTrue(driver.getCurrentUrl().contains("/login"));
     }
+
     @Test
     public void testErrorMessageWrongPassword(){
         loginPage.logIn("admin@admin.com", "1234567");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        Assert.assertEquals(loginPage.getErrorMessageWrongPassword().getText(), "Wrong password");
+        Assert.assertEquals(loginPage.getErrorMessage().getText(), "Wrong password");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         Assert.assertTrue(driver.getCurrentUrl().contains("/login"));
     }
+
     @Test
     private void testLoginAdmin (){
         loginPage.logIn("admin@admin.com", "12345");
@@ -110,9 +109,9 @@ public class LoginTests extends BaseTest {
     @Test
     private void testLogout(){
         loginPage.logIn("admin@admin.com", "12345");
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         Assert.assertTrue(loginPage.getLoginButton().isDisplayed());
         driverWait.until(ExpectedConditions.urlContains("/login"));
+        driver.get("https://vue-demo.daniel-avellaneda.com/home");
         Assert.assertTrue(driver.getCurrentUrl().contains("/login"));
     }
 

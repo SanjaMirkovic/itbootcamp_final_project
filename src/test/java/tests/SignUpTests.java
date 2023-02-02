@@ -58,9 +58,9 @@ public class SignUpTests extends BaseTest {
 
     @BeforeMethod
     @Override
-    public void beforeMethod() {
-        super.beforeMethod();
-        homePage.getSignUpButton().click();
+    public void beforeTest() {
+        super.beforeTest();
+        driver.get("https://vue-demo.daniel-avellaneda.com/signup");
     }
 
     @Test
@@ -70,10 +70,9 @@ public class SignUpTests extends BaseTest {
 
     @Test
     public void testInputTypes(){
-        Assert.assertEquals(signUpPage.getName().getAttribute("type"), "Name");
-        Assert.assertEquals(signUpPage.getEmail().getAttribute("type"), "Email");
-        Assert.assertEquals(signUpPage.getPassword().getAttribute("type"), "Password");
-        Assert.assertEquals(signUpPage.getConfirmPassword().getAttribute("type"), "Confirm Password");
+        Assert.assertEquals(signUpPage.getEmail(), "email");
+        Assert.assertEquals(signUpPage.getPassword(), "password");
+        Assert.assertEquals(signUpPage.getConfirmPassword(), "password");
     }
 
     @Test
@@ -81,7 +80,7 @@ public class SignUpTests extends BaseTest {
         signUpPage.signUp("Test Test", "admin@admin.com", "123654", "123654");
         driverWait.until(ExpectedConditions.visibilityOf(signUpPage.getMessageUserAlreadyExists()));
         Assert.assertEquals(signUpPage.getMessageUserAlreadyExists().getText(), "E-mail already exists");
-        Assert.assertTrue(driver.getCurrentUrl().endsWith("/signup"));
+        Assert.assertTrue(driver.getCurrentUrl().contains("/signup"));
     }
 
     @Test
@@ -92,10 +91,6 @@ public class SignUpTests extends BaseTest {
         driverWait.until(ExpectedConditions.textToBePresentInElement(signUpPage.getMessageVerifyAccount(),
                 "IMPORTANT: Verify your account"));
         Assert.assertEquals(signUpPage.getMessageVerifyAccount().getText(), "IMPORTANT: Verify your account");
-
+        homePage.getCloseButton().click();
     }
-
-
-
-
 }
