@@ -73,10 +73,6 @@ public class ProfilePage extends BasePage {
         return saveButton;
     }
 
-    public void selectCity(String city){
-        Select selectCity = new Select(this.city);
-        selectCity.selectByVisibleText(city);
-    }
 
     public void editMyProfile (String name, String phone, String country, String twitter, String github){
         this.name.clear();

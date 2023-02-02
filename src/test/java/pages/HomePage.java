@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage extends BasePage {
@@ -22,19 +23,17 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//*[@id=\"app\"]/div/div/header/div/div[3]/a[4]/span")
     private WebElement signUpButton;
 
-    @FindBy(xpath = "//*[@id=\"app\"]/div/div/header/div/span/button/span/i")
-    private WebElement leftSidebar;
 
     @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/a[3]")
     private WebElement myProfile;
 
-    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/button[1]/span")
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/button[1]")
     private WebElement logoutButton;
 
-    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/button[1]/span")
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/button[1]")
     private WebElement adminButton;
 
-    @FindBy(xpath = "//*[@id=\"list-item-158\"]/div[2]")
+    @FindBy(className = "v-list-item__title")
     private WebElement cities;
 
     @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[1]/h1")
@@ -47,8 +46,6 @@ public class HomePage extends BasePage {
     public WebElement getCities() {
         return cities;
     }
-
-
 
     public WebElement getAdminButton() {
         return adminButton;
@@ -86,7 +83,4 @@ public class HomePage extends BasePage {
         return signUpButton;
     }
 
-    public WebElement getLeftSidebar() {
-        return leftSidebar;
-    }
 }
