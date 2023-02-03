@@ -40,7 +40,7 @@ public abstract class BaseTest {
     }
 
    @AfterMethod
-   public void afterMethod(){
+   public void afterTest(){
        homePage.getLogoutButton().click();
    }
 

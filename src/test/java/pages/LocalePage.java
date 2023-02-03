@@ -17,7 +17,6 @@ public class LocalePage extends BasePage{
     public WebElement getEs() {
         return es;
     }
-
     public WebElement getEn() {
         return en;
     }

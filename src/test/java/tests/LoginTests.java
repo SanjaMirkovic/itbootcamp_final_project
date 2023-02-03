@@ -54,6 +54,8 @@ import java.time.Duration;
 public class LoginTests extends BaseTest {
 
     private LoginPage loginPage;
+    private final String VALIDEMAIL = "admin@admin.com";
+    private final String VALIDPASSWORD = "12345";
 
     @Override
     @BeforeClass
@@ -69,7 +71,7 @@ public class LoginTests extends BaseTest {
         homePage.getLoginButton().click();
     }
 
-    @Test
+    @Test(priority = 1)
     public void testLoginUrl (){
         Assert.assertTrue(driver.getCurrentUrl().contains("/login"));
     }
@@ -86,29 +88,27 @@ public class LoginTests extends BaseTest {
         loginPage.logIn(faker.internet().emailAddress(), faker.internet().password());
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         Assert.assertEquals(loginPage.getErrorMessage().getText(), "User does not exists");
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         Assert.assertTrue(driver.getCurrentUrl().contains("/login"));
     }
 
     @Test
     public void testErrorMessageWrongPassword(){
-        loginPage.logIn("admin@admin.com", "1234567");
+        loginPage.logIn(VALIDEMAIL, "1234567");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         Assert.assertEquals(loginPage.getErrorMessage().getText(), "Wrong password");
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         Assert.assertTrue(driver.getCurrentUrl().contains("/login"));
     }
 
     @Test
     private void testLoginAdmin (){
-        loginPage.logIn("admin@admin.com", "12345");
+        loginPage.logIn(VALIDEMAIL, VALIDPASSWORD);
         driverWait.until(ExpectedConditions.urlContains("/home"));
         Assert.assertTrue(driver.getCurrentUrl().contains("/home"));
     }
 
     @Test
     private void testLogout(){
-        loginPage.logIn("admin@admin.com", "12345");
+        loginPage.logIn(VALIDEMAIL, VALIDPASSWORD);
         Assert.assertTrue(loginPage.getLoginButton().isDisplayed());
         driverWait.until(ExpectedConditions.urlContains("/login"));
         driver.get("https://vue-demo.daniel-avellaneda.com/home");

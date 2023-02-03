@@ -72,24 +72,50 @@ public class ProfilePage extends BasePage {
     public void editMyProfile (String name, String phone, String city, String country, String twitter, String github){
         this.name.clear();
         this.name.sendKeys(name);
-
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         this.phone.clear();
         this.phone.sendKeys(phone);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
-        this.city.clear();
+        this.city.sendKeys(Keys.SPACE);
         this.city.sendKeys(Keys.CONTROL + "a");
-        this.city.sendKeys(Keys.DELETE);
-        this.city.sendKeys(city, Keys.ENTER);
-
+        this.city.sendKeys(city);
+        this.city.sendKeys(Keys.ARROW_DOWN);
+        this.city.sendKeys(Keys.ENTER);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         this.country.clear();
         this.country.sendKeys(country);
-
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         this.twitter.clear();
         this.twitter.sendKeys(twitter);
-
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         this.github.clear();
         this.github.sendKeys(github);
-
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         this.saveButton.click();
     }
 

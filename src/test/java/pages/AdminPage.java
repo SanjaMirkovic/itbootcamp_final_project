@@ -32,9 +32,12 @@ public class AdminPage extends BasePage {
 
     @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[2]/table/tbody/tr[1]/td[2]")
     private WebElement cityNameField;
-    @FindBy(className = "v-btn__content")
+    @FindBy(css = "#app > div.v-dialog__content.v-dialog__content--active > div > div > div.v-card__actions > button.v-btn.v-btn--text.theme--light.v-size--default.red--text.text--lighten3 > span")
     private WebElement dialogButton;
 
+    public WebElement getCityNameField() {
+        return cityNameField;
+    }
     public WebElement getDialogButton() {
         return dialogButton;
     }
@@ -73,5 +76,4 @@ public class AdminPage extends BasePage {
         this.nameField.sendKeys(name + " edited");
         this.saveButton.click();
     }
-
 }
