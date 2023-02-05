@@ -70,53 +70,35 @@ public class ProfilePage extends BasePage {
 
 
     public void editMyProfile (String name, String phone, String city, String country, String twitter, String github){
-        this.name.clear();
-        this.name.sendKeys(name);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        this.phone.clear();
-        this.phone.sendKeys(phone);
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
+        this.name.sendKeys(Keys.CONTROL + "a", Keys.DELETE);
+        this.name.sendKeys(name);
+
+        this.phone.sendKeys(Keys.CONTROL + "a", Keys.DELETE);
+        this.phone.sendKeys(phone);
+
         this.city.sendKeys(Keys.SPACE);
         this.city.sendKeys(Keys.CONTROL + "a");
         this.city.sendKeys(city);
         this.city.sendKeys(Keys.ARROW_DOWN);
         this.city.sendKeys(Keys.ENTER);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        this.country.clear();
+
+        this.country.sendKeys(Keys.CONTROL + "a", Keys.DELETE);
         this.country.sendKeys(country);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        this.twitter.clear();
+
+        this.twitter.sendKeys(Keys.CONTROL + "a", Keys.DELETE);
         this.twitter.sendKeys(twitter);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        this.github.clear();
+
+        this.github.sendKeys(Keys.CONTROL + "a", Keys.DELETE);
         this.github.sendKeys(github);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+
         this.saveButton.click();
+
     }
 
 }

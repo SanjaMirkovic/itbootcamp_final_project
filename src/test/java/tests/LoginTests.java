@@ -109,9 +109,13 @@ public class LoginTests extends BaseTest {
     @Test
     private void testLogout(){
         loginPage.logIn(VALIDEMAIL, VALIDPASSWORD);
-        Assert.assertTrue(loginPage.getLoginButton().isDisplayed());
+        WebElement logoutButton = driver.findElement(By.className("btnLogout"));
+        Assert.assertTrue(logoutButton.isDisplayed());
+        logoutButton.click();
         driverWait.until(ExpectedConditions.urlContains("/login"));
+        Assert.assertTrue(driver.getCurrentUrl().contains("/login"));
         driver.get("https://vue-demo.daniel-avellaneda.com/home");
+        driverWait.until(ExpectedConditions.urlContains("/login"));
         Assert.assertTrue(driver.getCurrentUrl().contains("/login"));
     }
 

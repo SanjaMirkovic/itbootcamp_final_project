@@ -1,6 +1,8 @@
 package tests;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
@@ -9,6 +11,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import pages.HomePage;
 import java.time.Duration;
+import java.util.List;
+
 /*
 Osnovna klasa koju svaki test da nasledjuje. Ova klasa treba da ima:
 baseUrl - url stranice https://vue-demo.daniel-avellaneda.com
@@ -41,7 +45,11 @@ public abstract class BaseTest {
 
    @AfterMethod
    public void afterTest(){
-       homePage.getLogoutButton().click();
+
+        List<WebElement> logoutButton = driver.findElements(By.className("btnLogout"));
+        if(!logoutButton.isEmpty()) {
+            logoutButton.get(0).click();
+       }
    }
 
     @AfterClass

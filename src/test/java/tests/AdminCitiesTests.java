@@ -96,7 +96,6 @@ public class AdminCitiesTests extends BaseTest {
 
     @Test
     public void testEditCity() {
-        testCreateNewCity();
         adminPage.editCity(city);
         driverWait.until(ExpectedConditions.textToBePresentInElement(adminPage.getErrorMessage(),
                 "Saved successfully"));
@@ -105,8 +104,6 @@ public class AdminCitiesTests extends BaseTest {
 
     @Test
     public void testSearchCity() {
-        testCreateNewCity();
-        testEditCity();
         adminPage.getSearchField().sendKeys(city + " edited");
         driverWait.until(ExpectedConditions.textToBePresentInElement(adminPage.getCityNameField(), city + " edited"));
         Assert.assertTrue(adminPage.getCityNameField().getText().contains(city));
@@ -114,8 +111,6 @@ public class AdminCitiesTests extends BaseTest {
 
     @Test
     public void testDeleteCity() {
-        testCreateNewCity();
-        testEditCity();
         adminPage.getSearchField().sendKeys(city + " edited");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         adminPage.getDeleteButton().click();

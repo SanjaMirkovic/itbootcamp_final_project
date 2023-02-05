@@ -42,17 +42,21 @@ public class ProfileTests extends BaseTest {
     @Test
     public void testEditProfile() {
         homePage.getMyProfile().click();
+
         Faker faker = new Faker();
         String name = faker.name().fullName();
         String phoneNumber = faker.phoneNumber().cellPhone();
-        String city = faker.address().city();
+        String city = "New York";
         String country = faker.country().name();
-        String twitter = faker.internet().url();
-        String github = faker.internet().url();
+        String twitter = "https://twitter.com";
+        String github = "https://github.com/sm";
+
         profilePage.editMyProfile(name, phoneNumber, city, country, twitter, github);
+
         driverWait.until(ExpectedConditions.textToBePresentInElement(profilePage.getMessageSuccessfulySaved(),
                 "Profile saved successfuly"));
         Assert.assertTrue(profilePage.getMessageSuccessfulySaved().getText().contains("Profile saved successfuly"));
+
         Assert.assertEquals(profilePage.getName().getAttribute("value"), name);
         Assert.assertEquals(profilePage.getPhone().getAttribute("value"), phoneNumber);
         Assert.assertEquals(profilePage.getCity().getAttribute("value"), city);
