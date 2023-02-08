@@ -35,20 +35,19 @@ public class ProfileTests extends BaseTest {
     @Override
     public void beforeTest() {
         super.beforeTest();
-        driver.get("https://vue-demo.daniel-avellaneda.com/profile");
-        loginPage.logIn("admin@admin.com", "12345");
+//        driver.get(BASEURL + "/profile");
+        homePage.getLoginButton().click();
+        loginPage.logIn(VALIDEMAIL, VALIDPASSWORD);
+        homePage.getMyProfile().click();
     }
 
     @Test
     public void testEditProfile() {
-        homePage.getMyProfile().click();
-
-        Faker faker = new Faker();
         String name = faker.name().fullName();
         String phoneNumber = faker.phoneNumber().cellPhone();
-        String city = "New York";
+        String city = "Barranquilla";
         String country = faker.country().name();
-        String twitter = "https://twitter.com";
+        String twitter = "https://twitter.com/sm";
         String github = "https://github.com/sm";
 
         profilePage.editMyProfile(name, phoneNumber, city, country, twitter, github);

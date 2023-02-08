@@ -1,5 +1,6 @@
 package tests;
 
+import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,19 +28,23 @@ public abstract class BaseTest {
     protected WebDriver driver;
     protected WebDriverWait driverWait;
     protected HomePage homePage;
+    protected Faker faker = new Faker();
+    protected final String VALIDEMAIL = "admin@admin.com";
+    protected final String VALIDPASSWORD = "12345";
+    protected final String BASEURL = "https://vue-demo.daniel-avellaneda.com";
 
     @BeforeClass
     public void beforeClass() {
-        System.setProperty("webdriver.chrome.driver", "D:\\Bootcamp\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driverWait = new WebDriverWait(driver, Duration.ofSeconds(20));
         homePage = new HomePage(driver, driverWait);
+        faker = new Faker();
     }
 
     @BeforeMethod
     public void beforeTest() {
-        driver.get("https://vue-demo.daniel-avellaneda.com");
+        driver.get(BASEURL);
         driver.manage().window().maximize();
     }
 

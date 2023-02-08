@@ -54,8 +54,6 @@ import java.time.Duration;
 public class LoginTests extends BaseTest {
 
     private LoginPage loginPage;
-    private final String VALIDEMAIL = "admin@admin.com";
-    private final String VALIDPASSWORD = "12345";
 
     @Override
     @BeforeClass
@@ -84,7 +82,6 @@ public class LoginTests extends BaseTest {
 
     @Test
     public void testErrorMessageUserDoNotExists(){
-        Faker faker = new Faker();
         loginPage.logIn(faker.internet().emailAddress(), faker.internet().password());
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         Assert.assertEquals(loginPage.getErrorMessage().getText(), "User does not exists");
@@ -114,7 +111,7 @@ public class LoginTests extends BaseTest {
         logoutButton.click();
         driverWait.until(ExpectedConditions.urlContains("/login"));
         Assert.assertTrue(driver.getCurrentUrl().contains("/login"));
-        driver.get("https://vue-demo.daniel-avellaneda.com/home");
+        driver.get(BASEURL + "/home");
         driverWait.until(ExpectedConditions.urlContains("/login"));
         Assert.assertTrue(driver.getCurrentUrl().contains("/login"));
     }

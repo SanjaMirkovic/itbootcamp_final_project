@@ -60,7 +60,7 @@ public class SignUpTests extends BaseTest {
     @Override
     public void beforeTest() {
         super.beforeTest();
-        driver.get("https://vue-demo.daniel-avellaneda.com/signup");
+        homePage.getSignUpButton().click();
     }
 
     @Test
@@ -77,7 +77,7 @@ public class SignUpTests extends BaseTest {
 
     @Test
     public void testUserAlreadyExist(){
-        signUpPage.signUp("Test Test", "admin@admin.com", "123654", "123654");
+        signUpPage.signUp("Test Test", VALIDEMAIL, "123654", "123654");
         driverWait.until(ExpectedConditions.visibilityOf(signUpPage.getMessageUserAlreadyExists()));
         Assert.assertEquals(signUpPage.getMessageUserAlreadyExists().getText(), "E-mail already exists");
         Assert.assertTrue(driver.getCurrentUrl().contains("/signup"));
@@ -85,7 +85,6 @@ public class SignUpTests extends BaseTest {
 
     @Test
     public void testSignUpVerify(){
-        Faker faker = new Faker();
         String password = faker.internet().password();
         signUpPage.signUp("Sanja Mirkovic", faker.internet().emailAddress(), password, password);
         driverWait.until(ExpectedConditions.textToBePresentInElement(signUpPage.getMessageVerifyAccount(),

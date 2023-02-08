@@ -1,16 +1,13 @@
 package tests;
 
 import com.github.javafaker.Faker;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.AdminPage;
-import pages.LocalePage;
 import pages.LoginPage;
-import pages.ProfilePage;
 
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
@@ -57,7 +54,6 @@ public class AdminCitiesTests extends BaseTest {
 
     private AdminPage adminPage;
     private LoginPage loginPage;
-    Faker faker = new Faker();
     private String city = faker.address().city();
 
 
@@ -74,7 +70,7 @@ public class AdminCitiesTests extends BaseTest {
     public void beforeTest() {
         super.beforeTest();
         homePage.getLoginButton().click();
-        loginPage.logIn("admin@admin.com", "12345");
+        loginPage.logIn(VALIDEMAIL, VALIDPASSWORD);
         homePage.getAdminButton().click();
         homePage.getCities().click();
     }

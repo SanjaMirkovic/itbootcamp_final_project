@@ -18,6 +18,7 @@ public class LoginPage extends BasePage {
 
     @FindBy (xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]/ul/li")
     private WebElement errorMessage;
+
     public LoginPage(WebDriver webDriver, WebDriverWait webDriverWait) {
         super(webDriver, webDriverWait);
     }

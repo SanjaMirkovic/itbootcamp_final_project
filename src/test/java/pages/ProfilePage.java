@@ -4,7 +4,6 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
@@ -64,41 +63,34 @@ public class ProfilePage extends BasePage {
         return github;
     }
 
-    public WebElement getSaveButton() {
-        return saveButton;
-    }
-
-
-    public void editMyProfile (String name, String phone, String city, String country, String twitter, String github){
+    public void clearAllFields(){
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
         this.name.sendKeys(Keys.CONTROL + "a", Keys.DELETE);
-        this.name.sendKeys(name);
-
         this.phone.sendKeys(Keys.CONTROL + "a", Keys.DELETE);
-        this.phone.sendKeys(phone);
-
-        this.city.sendKeys(Keys.SPACE);
-        this.city.sendKeys(Keys.CONTROL + "a");
-        this.city.sendKeys(city);
-        this.city.sendKeys(Keys.ARROW_DOWN);
-        this.city.sendKeys(Keys.ENTER);
-
+        this.city.sendKeys(Keys.SPACE, Keys.CONTROL + "a", Keys.DELETE);
         this.country.sendKeys(Keys.CONTROL + "a", Keys.DELETE);
-        this.country.sendKeys(country);
-
         this.twitter.sendKeys(Keys.CONTROL + "a", Keys.DELETE);
-        this.twitter.sendKeys(twitter);
-
         this.github.sendKeys(Keys.CONTROL + "a", Keys.DELETE);
+    }
+
+    public void editMyProfile (String name, String phone, String city, String country, String twitter, String github){
+       clearAllFields();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        this.name.sendKeys(name);
+        this.phone.sendKeys(phone);
+        this.city.sendKeys(Keys.ENTER, city, Keys.ARROW_DOWN, Keys.ENTER);
+        this.country.sendKeys(country);
+        this.twitter.sendKeys(twitter);
         this.github.sendKeys(github);
-
         this.saveButton.click();
-
     }
 
 }
